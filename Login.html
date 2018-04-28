@@ -1,0 +1,23 @@
+<div class="" ng-controller="loginCtrl">
+  
+  <form class=" animate" action="#">
+    <div class="imgcontainer">
+      <img src="assets/images/account.png" alt="Avatar" class="avatar">
+    </div>
+
+    <div class="container">
+      <label for="uname"><b>Username</b></label>
+      <input type="text" placeholder="Enter Username" ng-model="name" required>
+
+      <label for="psw"><b>Password</b></label>
+      <input type="password" placeholder="Enter Password" ng-model="pass" required>
+        
+      <button type="button" ng-click=submit()>Login</button>
+    </div>
+
+    <div class="container">
+      <span class="psw">Forgot <a href="#">password?</a></span>
+    </div>
+
+  </form>
+</div>

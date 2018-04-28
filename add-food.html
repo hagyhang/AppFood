@@ -1,0 +1,44 @@
+<div ng-controller="addFoods" id="addFoods">
+  <div class="header">
+    <button class="logout-btn btn default-btn">Logout</button>
+    <a href="#"><img class="logo" src="assets/images/logo.png"/></a>
+  </div>
+  <div class="add-food-container">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <div class="row">
+          <input type="file" id="file" name="file"/>
+          <img id="img" src=""/>
+          <button ng-click="add()">Add</button>
+        </div>
+        <div class="row">
+          <label><span class="add-food-label"></span>Tên món ăn<span class="text-danger">*</span></label>
+          <input class="form-control" type="" name="">
+        </div>
+        <div class="row">
+          <label><span class="add-food-label"></span>Mô tả<span class="text-danger">*</span></label>
+          <textarea class="form-control AF-des" type="" name=""></textarea>
+        </div>
+        <div class="row">
+          <label><span class="add-food-label"></span>Link Youtube<span class="text-danger"></span></label>
+          <input class="form-control" type="" name="">
+        </div>
+        <div class="row">
+          <label><span class="add-food-label"></span>Nguyên liệu<span class="text-danger"></span></label>
+          <input class="form-control" type="" name="">
+        </div>
+        <div class="row">
+          <label><span class="add-food-label"></span>Cách làm<span class="text-danger"></span></label>
+          <div ng-repeat="s in stepList" class="container">
+            <div>Bước{{$index+1}}</div>
+            <input type="text" value="{{s.step}}" placeholder="Mô tả">
+            <img class="step-img" ng-repeat="i in s.arrImage" src="{{i.image}}">
+            <input type="file" id="file{{$index}}" tag="{{$index}}" onchange="angular.element(this).scope().uploadFile(this)">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</div>

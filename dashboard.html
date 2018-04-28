@@ -1,0 +1,68 @@
+<div ng-controller="dashCtrl">
+  <div class="header">
+    <button class="logout-btn btn default-btn">Logout</button>
+    <a href="#"><img class="logo" src="assets/images/logo.png"/></a>
+  </div>
+  <div class="menu">
+    <div class="carousel fade-carousel slide container mb20" data-ride="carousel" data-interval="1000" id="bs-carousel">
+      <!-- Overlay -->
+      <div class="overlay"></div>
+
+      <!-- Indicators -->
+      <ol class="carousel-indicators">
+        <li data-target="#bs-carousel" data-slide-to="0" class="active"></li>
+        <li data-target="#bs-carousel" data-slide-to="1"></li>
+        <li data-target="#bs-carousel" data-slide-to="2"></li>
+      </ol>
+      
+      <!-- Wrapper for slides -->
+      <div class="carousel-inner">
+        <div class="item slides active">
+          <div class="slide-1">
+            <img src="https://www.cooky.vn/imgs/Ads/cha-ca-la-vong.jpg">
+          </div>
+        </div>
+        <div class="item slides">
+          <div class="slide-2">
+            <img src="https://www.cooky.vn/imgs/Ads/cha-ca-la-vong.jpg">
+          </div>
+        </div>
+        <div class="item slides">
+          <div class="slide-3">
+            <img src="https://www.cooky.vn/imgs/Ads/cha-ca-la-vong.jpg">
+          </div>
+        </div>
+      </div> 
+    </div>
+    <div class="container cate-list">
+        <div data-ng-repeat="c in categories" class="col-xs-2 " ng-click="CateSelected($event)" stt="{{$index}}">
+          <div class="cate-content">
+
+            <div class="cate-text" stt="{{$index}}">
+              <img class="cate-icon" src="assets/images/icon{{$index}}.png">
+              <p>
+                 {{c.name}}
+              </p>
+             
+            </div>
+            <img class="cate-img" stt="{{$index}}" src="{{c.image}}"/>
+          </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <h3 class="mb20 cate-title">CÔNG THỨC CHẾ BIẾN</h3>
+        <div data-ng-repeat="f in foods" class="col-xs-3" ng-click="FoodSelected($event)" fid="{{f._id}}">
+          <div class="food-content" fid="{{f._id}}">
+            <img class="food-img"  fid="{{f._id}}" src="{{f.image}}"/>
+            <p class="food-text">{{f.name}}</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </div>
+</div>
