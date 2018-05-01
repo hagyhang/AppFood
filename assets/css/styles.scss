@@ -630,5 +630,19 @@ Image credits: unsplash.com
 	width: 80px;
 	height: 80px;
 }
+.add-step{
+	width: 200px;
+	height: 20px;
+	background-color: #ffe6e6;
+	color: red;
+	cursor: cell;
+}
+.del-step{
+	width: 30px;
+	height: 28px;
+	min-width: 0px;
+	padding: 0px;
+	float: right; 
+}
 /*end add-food*/
 @import "_responsive.scss";

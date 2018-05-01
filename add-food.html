@@ -7,34 +7,51 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <div class="row">
-          <input type="file" id="file" name="file"/>
-          <img id="img" src=""/>
-          <button ng-click="add()">Add</button>
+          <label><span class="add-food-label"></span>Ảnh đại diện</label>
+          <input type="file" id="file" name="file" onchange="angular.element(this).scope().uploadImage()"/>
+          <img id="img" src="{{food.image}}"/>
         </div>
         <div class="row">
           <label><span class="add-food-label"></span>Tên món ăn<span class="text-danger">*</span></label>
-          <input class="form-control" type="" name="">
+          <input class="form-control" type="text" ng-model="food.name">
+        </div>
+        <div class="row">
+          <label><span class="add-food-label"></span>Nhóm<span class="text-danger">*</span></label>
+          <select id="selector">
+            <option ng-repeat="c in categories" value="{{c._id}}">{{c.name}}</option>
+          </select>
         </div>
         <div class="row">
           <label><span class="add-food-label"></span>Mô tả<span class="text-danger">*</span></label>
-          <textarea class="form-control AF-des" type="" name=""></textarea>
+          <textarea class="form-control AF-des" ng-model="food.decriptions"></textarea>
         </div>
         <div class="row">
           <label><span class="add-food-label"></span>Link Youtube<span class="text-danger"></span></label>
-          <input class="form-control" type="" name="">
+          <input class="form-control" type="text" ng-model="food.youtube">
         </div>
         <div class="row">
-          <label><span class="add-food-label"></span>Nguyên liệu<span class="text-danger"></span></label>
-          <input class="form-control" type="" name="">
+          <label><span class="add-food-label"></span>Nguyên liệu<span class="text-danger">*</span></label>
+          <input class="form-control" type="text" ng-model="materials">
         </div>
         <div class="row">
-          <label><span class="add-food-label"></span>Cách làm<span class="text-danger"></span></label>
-          <div ng-repeat="s in stepList" class="container">
-            <div>Bước{{$index+1}}</div>
-            <input type="text" value="{{s.step}}" placeholder="Mô tả">
-            <img class="step-img" ng-repeat="i in s.arrImage" src="{{i.image}}">
-            <input type="file" id="file{{$index}}" tag="{{$index}}" onchange="angular.element(this).scope().uploadFile(this)">
+          <div><label><span class="add-food-label"></span>Cách làm<span class="text-danger">*</span></label></div>
+          <div data-ng-repeat="s in food.content" class="col-xs-12">
+            <div class="col-xs-12">
+              <div>Bước{{$index+1}}</div>
+              <input type="text" value="{{s.step}}" placeholder="Mô tả">
+              <div><label><span class="add-food-label"></span>Hình ảnh</label></div>
+              <div class="mb10">
+                <img id="img{{$index}}" class="step-img mr10" ng-repeat="i in s.arrImage" src="{{i.image}}">
+              </div>  
+
+              <input type="file" id="file{{$index}}" tag="{{$index}}" onchange="angular.element(this).scope().uploadSubImage(this)">
+              <a class="btn btn-danger del-step" ng-click="delStep($index)"><i class="zmdi zmdi-delete zmdi-hc-2x"></i></a>
+            </div>
           </div>
+          <div class="col-xs-12 add-step" ng-click="addStep()"><i class="zmdi zmdi-plus"></i> Thêm bước</div>
+        </div>
+        <div class="row">
+          <button ng-click="add()">Add</button>
         </div>
       </div>
     </div>

@@ -57,7 +57,7 @@
         <div data-ng-repeat="f in foods" class="col-xs-3" ng-click="FoodSelected($event)" fid="{{f._id}}">
           <div class="food-content" fid="{{f._id}}">
             <img class="food-img"  fid="{{f._id}}" src="{{f.image}}"/>
-            <p class="food-text">{{f.name}}</p>
+            <p class="food-text" fid="{{f._id}}">{{f.name}}</p>
           </div>
         </div>
       </div>
