@@ -1,4 +1,5 @@
 var app = angular.module("mainApp", ["ngRoute"]);
+var currentUser;
 app.config(($routeProvider)=>{
 	$routeProvider
 	.when("/", {
@@ -46,6 +47,7 @@ app.controller("loginCtrl", ($scope, $location, $http)=>{
 			if (data.success == true)
 			{
 				token = data.results.token;
+				currentUser = data.results._id;
 				$location.path('/dashboard');
 				window.localStorage.setItem("FOOD_TOKEN", token);
 			}
@@ -153,7 +155,9 @@ app.controller("addFoods", ($scope, $location, $http) => {
 			}
 		});
 	}
+
 	$scope.add = function(){
+		// alert(currentUser);/
 		var materials = $scope.materials.split(";")
 		if ($scope.materials != "" && $scope.food.name != "" && $scope.food.decriptions != "" && $scope.food.content.length > 0)
 		{
