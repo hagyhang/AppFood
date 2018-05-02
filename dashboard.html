@@ -1,6 +1,13 @@
 <div ng-controller="dashCtrl">
   <div class="header">
-    <button class="logout-btn btn default-btn">Logout</button>
+    <div class="row control-panel">
+      <div class="col-xs-3">
+        <button class="btn btn-circle" ng-click="AddFood()"><i class="zmdi zmdi-plus"></i></button>
+      </div>
+      <div class="col-xs-9">
+        <button class="logout-btn btn default-btn" ng-click="Logout()">Logout</button>
+      </div>
+    </div>
     <a href="#"><img class="logo" src="assets/images/logo.png"/></a>
   </div>
   <div class="menu">
@@ -36,11 +43,11 @@
     </div>
     <div class="container cate-list">
         <div data-ng-repeat="c in categories" class="col-xs-2 " ng-click="CateSelected($event)" stt="{{$index}}">
-          <div class="cate-content">
+          <div class="cate-content" stt="{{$index}}">
 
             <div class="cate-text" stt="{{$index}}">
-              <img class="cate-icon" src="assets/images/icon{{$index}}.png">
-              <p>
+              <img class="cate-icon" src="assets/images/icon{{$index}}.png" stt="{{$index}}">
+              <p  stt="{{$index}}">
                  {{c.name}}
               </p>
              
@@ -54,11 +61,12 @@
     <div class="panel panel-default">
       <div class="panel-body">
         <h3 class="mb20 cate-title">CÔNG THỨC CHẾ BIẾN</h3>
-        <div data-ng-repeat="f in foods" class="col-xs-3" ng-click="FoodSelected($event)" fid="{{f._id}}">
-          <div class="food-content" fid="{{f._id}}">
+        <div data-ng-repeat="f in foods" class="col-xs-3 mb10">
+          <div class="food-content" fid="{{f._id}}" ng-click="FoodSelected($event)">
             <img class="food-img"  fid="{{f._id}}" src="{{f.image}}"/>
             <p class="food-text" fid="{{f._id}}">{{f.name}}</p>
           </div>
+          <i class="zmdi zmdi-star {{f.isFavourite}}" ng-click="Like($index)" fid="{{f._id}}">{{f.favourite.length}}</i>
         </div>
       </div>
 

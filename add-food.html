@@ -1,6 +1,13 @@
 <div ng-controller="addFoods" id="addFoods">
   <div class="header">
-    <button class="logout-btn btn default-btn">Logout</button>
+    <div class="row control-panel">
+      <div class="col-xs-3">
+        <button class="btn btn-circle" ng-click="Back()"><i class="zmdi zmdi-arrow-left"></i></button>
+      </div>
+      <div class="col-xs-9">
+        <button class="logout-btn btn default-btn" ng-click="Logout()">Logout</button>
+      </div>
+    </div>
     <a href="#"><img class="logo" src="assets/images/logo.png"/></a>
   </div>
   <div class="add-food-container">

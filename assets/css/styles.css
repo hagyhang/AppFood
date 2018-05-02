@@ -579,6 +579,18 @@ button {
 button:hover {
   opacity: 0.8; }
 
+.btn-circle {
+  background-color: #22b3b5;
+  min-width: 30px;
+  width: 35px;
+  height: 35px;
+  text-align: center;
+  padding: 6px 0;
+  font-size: 12px;
+  line-height: 1.428571429;
+  border-radius: 15px;
+  margin: 0px; }
+
 /* Extra styles for the cancel button */
 .cancelbtn {
   width: auto;
@@ -655,10 +667,14 @@ span.psw {
   height: 45px;
   padding: 5px; }
 
+.control-panel {
+  width: 200px;
+  float: right; }
+
 .logout-btn {
   width: 100px;
-  float: right;
-  margin: 0px; }
+  margin: 0px;
+  float: left; }
 
 .menu {
   background-color: #e9ebee; }
@@ -671,6 +687,7 @@ span.psw {
   padding: 20px 0px; }
 
 .cate-content {
+  cursor: pointer;
   position: relative; }
 
 .cate-img {
@@ -699,20 +716,33 @@ span.psw {
   color: blue; }
 
 .food-img {
+  cursor: pointer;
   width: 100%; }
 
 .food-text {
+  cursor: pointer;
   width: 100%;
   font-weight: 2px;
   text-align: center;
   font-size: 18px; }
 
 .food-image {
+  cursor: pointer;
   width: 600px;
   height: 400px; }
 
 .food-des {
   font-size: 25px; }
+
+.liked {
+  float: right;
+  color: #f56262;
+  cursor: pointer; }
+
+.unliked {
+  float: right;
+  color: #8e8585;
+  cursor: pointer; }
 
 /*
 Fade content bs-carousel with hero headers

@@ -1,5 +1,6 @@
 var app = angular.module("mainApp", ["ngRoute"]);
 var currentUser;
+var backLocation="/";
 app.config(($routeProvider)=>{
 	$routeProvider
 	.when("/", {
@@ -21,7 +22,6 @@ app.config(($routeProvider)=>{
 		redirectTo: "/"
 	});
 });
-var token, config;
 function ConfigToken(){
 	if(window.localStorage.getItem("FOOD_TOKEN") == null) return null;
 	return {
@@ -64,6 +64,14 @@ app.controller("dashCtrl", ($scope, $location, $http)=>{
 				var data = res.data;
 				if (data.success == true){
 					$scope.foods = data.results;
+					for (let i=0; i<$scope.foods.length; i++){
+						$scope.foods[i].isFavourite = "unliked";
+						$scope.foods[i].favourite.forEach((fa)=>{
+							if (fa == currentUser){
+								$scope.foods[i].isFavourite = "liked";
+							}
+						})
+					}
 				}
 				else {
 					$location.path("/");
@@ -79,6 +87,15 @@ app.controller("dashCtrl", ($scope, $location, $http)=>{
 			var data = res.data;
 			if (data.success == true){
 				$scope.foods = data.results;
+				console.log($scope.foods);
+				for (let i=0; i<$scope.foods.length; i++){
+					$scope.foods[i].isFavourite = "unliked";
+					$scope.foods[i].favourite.forEach((fa)=>{
+						if (fa == currentUser){
+							$scope.foods[i].isFavourite = "liked";
+						}
+					})
+				}
 			}
 			else {
 				$location.path("/");
@@ -86,33 +103,75 @@ app.controller("dashCtrl", ($scope, $location, $http)=>{
 		})	
 	}
 	$scope.FoodSelected = ($event)=>{
-		var id = $event.srcElement.attributes.fid.nodeValue;
+		let id = $event.srcElement.attributes.fid.nodeValue;
 		$location.path("/food/"+id);
+	}
+	$scope.Like = (i)=>{
+		let favouriters = $scope.foods[i].favourite;
+		if ($scope.foods[i].isFavourite == "liked"){
+			for(let i=0; i<favouriters.length; i++){
+				if (favouriters[i] == currentUser){
+					favouriters.splice(i, 1);
+				}
+			}
+			$scope.foods[i].isFavourite = "unliked";
+		}
+		else{
+			favouriters.push(currentUser);
+			$scope.foods[i].isFavourite = "liked";
+		}
+
+		$http.post("https://cookbook-server.herokuapp.com/food/" + $scope.foods[i]._id + "/update", {favourite: favouriters}, ConfigToken()).then((res)=>{
+			var data = res.data;
+			if (data.success == true){
+				console.log(data.results);
+			}
+		})
+	}
+	$scope.Logout = ()=>{
+		window.localStorage.clear();
+		$location.path("/");
+	}
+	$scope.AddFood = ()=>{
+		$location.path("/add-food");
+		backLocation = "/dashboard";
 	}
 })
 app.controller("foodCtrl", ($scope, $location, $http)=>{
 	$scope.currentPath = $location.$$path;
-	console.log($location);
-	console.log("https://cookbook-server.herokuapp.com" + $scope.currentPath);
-	
 	$http.get("https://cookbook-server.herokuapp.com" + $scope.currentPath + "/detail", ConfigToken()).then((res)=>{
-			var data = res.data;
-			if (data.success == true){
-				$scope.food = data.results;
-			}
-			else {
-				$location.path("/");
-			}
-		})
+		var data = res.data;
+		if (data.success == true){
+			$scope.food = data.results;
+		}
+		else {
+			$location.path("/");
+		}
+	})
+	$scope.Logout = ()=>{
+		window.localStorage.clear();
+		$location.path("/");
+	}
+	$scope.AddFood = ()=>{
+		$location.path("/add-food");
+		backLocation = $scope.currentPath;
+	}
 })
 
 app.controller("addFoods", ($scope, $location, $http) => {
+	$scope.Back = ()=>{
+		$location.path(backLocation);
+	}
+	$scope.Logout = ()=>{
+		window.localStorage.clear();
+		$location.path("/");
+	}
 	$scope.uploadSubImage = function(e){
 		var i = e.attributes['tag'].value;
 		var f = document.getElementById('file'+i).files[0];
 		var fd = new FormData();
 		fd.append("file", f);
-		console.log("file" + f);
+		// console.log("file" + f);
 		$http({
 	        url: "https://cookbook-server.herokuapp.com/image/",
 	        method: 'POST',
@@ -157,7 +216,6 @@ app.controller("addFoods", ($scope, $location, $http) => {
 	}
 
 	$scope.add = function(){
-		// alert(currentUser);/
 		var materials = $scope.materials.split(";")
 		if ($scope.materials != "" && $scope.food.name != "" && $scope.food.decriptions != "" && $scope.food.content.length > 0)
 		{
