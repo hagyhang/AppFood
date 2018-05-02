@@ -676,6 +676,15 @@ span.psw {
   margin: 0px;
   float: left; }
 
+.btn-del {
+  background-color: #c32111; }
+
+.visivleDel {
+  visibility: visible; }
+
+.collapseDel {
+  visibility: collapse; }
+
 .menu {
   background-color: #e9ebee; }
 

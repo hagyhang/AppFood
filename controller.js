@@ -6,6 +6,9 @@ app.config(($routeProvider)=>{
 	.when("/", {
 		templateUrl : "Login.html"
 	})
+	.when("/sign-up", {
+		templateUrl : "sign-up.html"
+	})
 	.when("/dashboard", {
 		templateUrl : "Dashboard.html"
 	})
@@ -30,20 +33,43 @@ function ConfigToken(){
 		}
 	}
 }
+app.controller("signUpCtrl", ($scope, $location, $http)=>{
+	$scope.submit = ()=>{
+		var user={
+			email : $scope.email,
+			password : $scope.password,
+			fullName : $scope.fullName
+		};
+		
+		$http.post("https://cookbook-server.herokuapp.com/users/register", user).then((res)=>{
+			var data = res.data;
+			if (data.success == true)
+			{
+				console.log("Tạo thành công!");
+				$location.path('/');
+			}
+		})
+	}
+})
 app.controller("loginCtrl", ($scope, $location, $http)=>{
+	$scope.email = "";
+	$scope.password = "";
 	let token = ConfigToken();
 	if (token != null){
-		console.log("t " + token);
 		$location.path('/dashboard');
 	}
+	$scope.SignUp = ()=>{
+		$location.path('/sign-up');
+	}
 	$scope.submit = ()=>{
-		// console.log($scope.name + " " + $scope.pass);
-		let data = {
-			"email" : 'phananh123qqq@gmail.com',//$scope.name
-			"password" : '123123qqq'//$scope.pass
+
+		let user = {
+			"email" : $scope.email, //'phananh123qqq@gmail.com'
+			"password" : $scope.password //'123123qqq'
 		}
-		$http.post("https://cookbook-server.herokuapp.com/users/sign_in/", data).then((res)=>{
+		$http.post("https://cookbook-server.herokuapp.com/users/sign_in/", user).then((res)=>{
 			var data = res.data;
+			console.log(data)
 			if (data.success == true)
 			{
 				token = data.results.token;
@@ -51,6 +77,8 @@ app.controller("loginCtrl", ($scope, $location, $http)=>{
 				$location.path('/dashboard');
 				window.localStorage.setItem("FOOD_TOKEN", token);
 			}
+		}, (res)=>{
+			alert("Tài khoản không tồn tại!");
 		})
 	}
 })
@@ -139,10 +167,14 @@ app.controller("dashCtrl", ($scope, $location, $http)=>{
 })
 app.controller("foodCtrl", ($scope, $location, $http)=>{
 	$scope.currentPath = $location.$$path;
+	$scope.isDel = "collapseDel";
 	$http.get("https://cookbook-server.herokuapp.com" + $scope.currentPath + "/detail", ConfigToken()).then((res)=>{
 		var data = res.data;
 		if (data.success == true){
 			$scope.food = data.results;
+			if ($scope.food.createBy == currentUser){
+				$scope.isDel = "visibleDel";
+			}
 		}
 		else {
 			$location.path("/");
@@ -155,6 +187,19 @@ app.controller("foodCtrl", ($scope, $location, $http)=>{
 	$scope.AddFood = ()=>{
 		$location.path("/add-food");
 		backLocation = $scope.currentPath;
+	}
+	$scope.DelFood = ()=>{
+		if (confirm("Bạn có chắc xóa bài viết này?")) {
+			$http.post("https://cookbook-server.herokuapp.com" + $scope.currentPath + "/delete",{}, ConfigToken()).then((res)=>{
+				var data = res.data;
+				if (data.success == true){
+					$scope.food = data.results;
+					console.log(data);
+					alert("Đã xóa");
+					$location.path("/");
+				}
+			})
+	    } 
 	}
 })
 
@@ -237,6 +282,8 @@ app.controller("addFoods", ($scope, $location, $http) => {
 				var data = res.data;
 				if (data.success == true){
 					console.log(data.results);
+					alert("Thêm thành công!");
+					$location.path('/dashboard');
 				}
 			})
 		}

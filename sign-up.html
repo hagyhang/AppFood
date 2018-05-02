@@ -1,18 +1,21 @@
-<div class="" ng-controller="loginCtrl">
+<div class="" ng-controller="signUpCtrl">
   
   <form class=" animate" action="#">
-    <div class="imgcontainer">
+<!--     <div class="imgcontainer">
       <img src="assets/images/account.png" alt="Avatar" class="avatar">
-    </div>
+    </div> -->
 
     <div class="container">
-      <label for="uname"><b>Username</b></label>
+      <label><b>Tên đầy đủ</b></label>
+      <input type="text" ng-model="fullName" required>
+
+      <label for="uname"><b>Email</b></label>
       <input type="text" placeholder="Enter Username" ng-model="email" required>
 
-      <label for="psw"><b>Password</b></label>
+      <label for="psw"><b>Mật khẩu</b></label>
       <input type="password" placeholder="Enter Password" ng-model="password" required>
-        
-      <button type="button" ng-click=submit()>Login</button>
+     
+      <button type="button" ng-click=submit()>Sign Up</button>
     </div>
 
     <div class="container">
